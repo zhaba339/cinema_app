@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'cinema/base.html' %}
 
-</body>
-</html>
+{% block title %}Контакты{% endblock %}
+
+{% block main %}
+<div class="contact-page">
+    <div class="head">
+        <div class="title">Контакты</div>
+    </div>
+    <p></p>
+    <div class="contact-info">
+        <p><strong>Адрес:</strong> г. Омск, ул. Космический проспект, д. 17А</p>
+        <p><strong>Телефон:</strong> +7 (495) 123-45-67</p>
+        <p><strong>Email:</strong> info@omskiycinema.ru</p>
+    </div>
+    <a class="dg-widget-link" href="http://2gis.ru/omsk/profiles/282003258722868,282003257812724/center/73.39073181152345,54.984484563583564/zoom/15?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=bigMap">Посмотреть на карте Омска</a><script charset="utf-8" src="https://widgets.2gis.com/js/DGWidgetLoader.js"></script><script charset="utf-8">new DGWidgetLoader({"width":500,"height":400,"borderColor":"#a3a3a3","pos":{"lat":54.984484563583564,"lon":73.39073181152345,"zoom":15},"opt":{"city":"omsk"},"org":[{"id":"282003258722868"},{"id":"282003257812724"}]});</script><noscript style="color:#c00;font-size:16px;font-weight:bold;">Виджет карты использует JavaScript. Включите его в настройках вашего браузера.</noscript>
+</div>
+{% endblock %}

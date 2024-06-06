@@ -1,32 +1,37 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <!-- Аналогично index.html -->
-</head>
-<body>
-  <header>
-    <!-- Аналогично index.html -->
-  </header>
+{% extends 'cinema/base.html' %}
 
-  <main>
-    <h2>Сегодня в кино</h2>
-    <div class="sorting">
-      <!-- Элементы сортировки -->
+{% block title %}Сегодня в кино{% endblock %}
+
+<main>
+    {% block main %}
+    <div class="head">
+        <div class="title">Сегодня в кино</div>
     </div>
     <div class="movies-grid">
-      <div class="movie">
-        <img src="poster.jpg" alt="Постер фильма">
-        <h3>Название фильма</h3>
-        <p>Жанр: ...</p>
-        <p>Категория: ...</p>
-        <p>Краткое описание...</p>
-      </div>
-      <!-- Другие блоки с фильмами -->
+  {% for movie in movies %}
+  <div class="movie-block">
+      <a href="{% url 'movie_detail' pk=movie.pk %}">
+    <div class="movie-poster">
+      {% if movie.poster %}
+      <img src="{{ movie.poster.url }}">
+      {% endif %}
     </div>
-  </main>
+      </a>
+    <div class="movie-info">
+      <h4>{{ movie.title }}</h4>
+      <p><strong>Жанр:</strong> {{ movie.genre }}</p>
+      <p><strong>Режиссер:</strong> {{ movie.director }}</p>
+      <p><strong>Страна:</strong> {{ movie.country }}</p>
+      <p><strong>Продолжительность:</strong> {{ movie.duration }} мин.</p>
+      <p><strong>В главных ролях:</strong> {{ movie.lead_roles }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+    {% endblock %}
+</main>
 
-  <footer>
-    <!-- Аналогично index.html -->
-  </footer>
-</body>
-</html>
+<footer>
+    <!-- Аналогично base.html -->
+</footer>
+

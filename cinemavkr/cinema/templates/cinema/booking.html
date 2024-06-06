@@ -1,0 +1,151 @@
+{% extends 'cinema/base.html' %}
+{% load static %}
+{% block title %}Бронирование{% endblock %}
+
+{% block main %}
+<div class="title">Бронирование билетов</div>
+<div class="container">
+    <div class="booking-info">
+        <p>Выберите места и нажмите кнопку "Забронировать"</p>
+    </div>
+        <table class="hall">
+            <div class="window"><strong>Экран</strong></div>
+        <tr class="seats">
+            <td class="seat free" data-seat-id="1">1</td>
+            <td class="seat free" data-seat-id="2">2</td>
+            <td class="seat free" data-seat-id="3">3</td>
+            <td class="seat free" data-seat-id="4">4</td>
+            <td class="seat free" data-seat-id="5">5</td>
+        </tr>
+        <tr class="seats">
+            <td class="seat free" data-seat-id="6">6</td>
+            <td class="seat free" data-seat-id="7">7</td>
+            <td class="seat free" data-seat-id="8">8</td>
+            <td class="seat free" data-seat-id="9">9</td>
+            <td class="seat free" data-seat-id="10">10</td>
+        </tr>
+        <tr class="seats">
+            <td class="seat free" data-seat-id="11">11</td>
+            <td class="seat free" data-seat-id="12">12</td>
+            <td class="seat free" data-seat-id="13">13</td>
+            <td class="seat free" data-seat-id="14">14</td>
+            <td class="seat free" data-seat-id="15">15</td>
+        </tr>
+        <tr class="seats">
+            <td class="seat free" data-seat-id="16">16</td>
+            <td class="seat free" data-seat-id="17">17</td>
+            <td class="seat free" data-seat-id="18">18</td>
+            <td class="seat free" data-seat-id="19">19</td>
+            <td class="seat free" data-seat-id="20">20</td>
+        </tr>
+            <div class="seat-info">
+            <div class="seat-row">
+                <div class="seat occupied"></div>
+                <span class="label">- Забронировано</span>
+            </div>
+            <div class="seat-row">
+                <div class="seat free"></div>
+                <span class="label">- Свободное место</span>
+            </div>
+            </div>
+        </table>
+    </div>
+
+<button id="reserve-btn" class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">Забронировать</button>
+
+<!-- Модальное окно Bootstrap -->
+<div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservationModalLabel">Подтверждение бронирования</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="seats-info"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" id="confirm-btn" class="btn btn-primary">Подтвердить бронирование</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="success-message" style="display: none;">
+    <p>Бронирование успешно! Забронированные места: <span id="booked-seats-info"></span></p>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var seats = document.querySelectorAll(".seat");
+    var reserveBtn = document.getElementById("reserve-btn");
+    var confirmBtn = document.getElementById("confirm-btn");
+    var selectedSeats = [];
+
+    seats.forEach(function(seat) {
+        seat.addEventListener("click", function() {
+            var seatId = seat.getAttribute('data-seat-id');
+            if (!seat.classList.contains("booked")) {
+                if (seat.classList.contains("selected")) {
+                    seat.classList.remove("selected");
+                    selectedSeats = selectedSeats.filter(id => id !== seatId);
+                } else {
+                    seat.classList.add("selected");
+                    selectedSeats.push(seatId);
+                }
+            }
+        });
+    });
+
+    reserveBtn.addEventListener("click", function() {
+        var seatsInfo = document.getElementById("seats-info");
+        seatsInfo.innerHTML = selectedSeats.map(id => `Место ${id}`).join(', ');
+    });
+
+    confirmBtn.addEventListener("click", function() {
+        fetch("{% url 'book_seat' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: new URLSearchParams({
+                'seat_ids[]': selectedSeats
+            }).toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                selectedSeats.forEach(function(seatId) {
+                    var seat = document.querySelector(`[data-seat-id='${seatId}']`);
+                    seat.classList.remove("selected");
+                    seat.classList.add("booked");
+                });
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+        });
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+{% endblock %}

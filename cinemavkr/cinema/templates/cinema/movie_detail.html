@@ -1,0 +1,69 @@
+{% extends 'cinema/base.html' %}
+{% load static %}
+{% block title %}Информация о фильме{% endblock %}
+
+{% block main %}
+<div class="movie-detail-block">
+    <div class="movie-detail-poster">
+        <img src="{{ movie.poster.url }}">
+    </div>
+    <div class="movie-detail-info">
+      <h3>{{ movie.title }}</h3>
+      <p><strong>Жанр:</strong> {{ movie.genre }}</p>
+      <p><strong>Режиссер:</strong> {{ movie.director }}</p>
+      <p><strong>Страна:</strong> {{ movie.country }}</p>
+      <p><strong>Год:</strong> {{ movie.year }}</p>
+      <p><strong>Продолжительность:</strong> {{ movie.duration }} мин.</p>
+      <p><strong>В главных ролях:</strong> {{ movie.lead_roles }}</p>
+      <p><strong>Описание:</strong> {{ movie.description }}</p>
+    </div>
+</div>
+<div class="movie-session">
+    <h4>Забронировать место</h4>
+    <div class="date-picker">
+      <label for="session-date">Выберите дату:</label>
+      <input type="date" id="session-date" name="session-date">
+    </div>
+    <div class="session-list">
+      <ul id="session-items">
+          {% if showtimes %}
+        {% for showtime in showtimes %}
+          <li>
+            <a href="{{ showtime.get_booking_url }}">
+              <button class="btn btn-outline-dark">{{ showtime.start_datetime }}</button>
+            </a>
+          </li>
+        {% endfor %}
+          {% else %}
+          <li><p>Для просмотра сеансов выберите дату выше</p></li>
+          {% endif %}
+      </ul>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#session-date').on('change', function() {
+            var selectedDate = $(this).val();
+            $.ajax({
+                url: window.location.href,
+                data: {
+                    'date': selectedDate
+                },
+                success: function(data) {
+                    var sessionItems = $('#session-items');
+                    sessionItems.empty();
+                    if (data.sessions.length > 0) {
+                        data.sessions.forEach(function(session) {
+                            sessionItems.append('<li><a href="' + session.booking_url + '"><button class="btn btn-outline-dark">' + session.start_datetime + '</button></a></li>');
+                        });
+                    } else {
+                        sessionItems.append('<li><p>Нет сеансов на выбранную дату</p></li>');
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,32 +1,9 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <!-- Аналогично index.html -->
-</head>
-<body>
-  <header>
-    <!-- Аналогично index.html -->
-  </header>
+{% extends 'cinema/today.html' %}
 
-  <main>
-    <h2>Сегодня в кино</h2>
-    <div class="sorting">
-      <!-- Элементы сортировки -->
-    </div>
-    <div class="movies-grid">
-      <div class="movie">
-        <img src="poster.jpg" alt="Постер фильма">
-        <h3>Название фильма</h3>
-        <p>Жанр: ...</p>
-        <p>Категория: ...</p>
-        <p>Краткое описание...</p>
-      </div>
-      <!-- Другие блоки с фильмами -->
-    </div>
-  </main>
+{% block title %}Скоро в кино{% endblock %}
 
-  <footer>
-    <!-- Аналогично index.html -->
-  </footer>
-</body>
-</html>
+{% block main %}
+ <div class="head">
+        <div class="title">Скоро в кино</div>
+    </div>
+{% endblock %}

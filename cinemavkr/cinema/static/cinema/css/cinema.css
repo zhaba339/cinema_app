@@ -1,0 +1,226 @@
+body {
+    background: #a6dced;
+    overflow-x: hidden;
+}
+
+aside {
+    float: left;
+    background: #ffffff;
+    width: 20%;
+    height: 100vh;
+    padding: 2.5%;
+    color: #0a0200;
+    border-right: 5px solid #DCDCDC;
+    position:fixed;
+}
+aside img {
+    width: 35%;
+    float: left;
+    position: relative;
+    top: -18px;
+    left: -10px;
+}
+aside .logo1{
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+    top: 0px;
+    left: 54px;
+
+}
+aside .logo2{
+    font-size: 37px;
+    font-weight: bold;
+    position: relative;
+    top: -10px;
+    left: 20px;
+}
+aside ul {
+    list-style: none;
+    margin-top: 30px;
+}
+aside ul a {
+    text-decoration: none;
+}
+aside ul li {
+    font-size: 22px;
+    color: #000;
+    display: block;
+    text-decoration: none;
+    margin-left: 15px;
+    transition: transform .5s ease;
+}
+aside ul a:hover, aside ul li:hover {
+    text-decoration-color: #a6dced;
+    transform: scale(1.02);
+}
+
+main {
+  margin-left: 25%;
+  margin-right: 5%;
+  min-height: 100%
+}
+.title {
+    font-size: 35px;
+    font-weight: 600;
+    margin-left: 445px;
+
+}
+.movies-grid {
+  margin-top:30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.movie-block {
+  display: flex;
+  width: 45%;
+  margin-bottom: 30px;
+}
+.movie-block img:hover {
+    transform: scale(1.02);
+}
+.movie-poster {
+  flex: 0 0 35%; /* Задаем ширину постера */
+  margin-right: 15px;
+}
+.movie-poster img {
+  max-width: 170px;
+  max-height: 250px;
+  object-fit: cover;
+}
+.movie-info {
+  flex: 1;
+  font-size: 14px;
+  margin-left: 0;
+}
+.movie-info p {
+  line-height: 1;
+}
+
+.movie-detail-block {
+  display: flex;
+  width: 100%;
+  margin-bottom: 30px;
+}
+.movie-detail-poster img {
+  margin-right: 15px;
+  margin-top: 30px;
+  width: 350px;
+  height: 500px;
+}
+.movie-detail-info {
+  flex: 1;
+  font-size: 16px;
+  margin-left: 10px;
+  margin-top: 30px;
+}
+
+.booking-block {
+    width: 600px;
+    height: 400px;
+    position: flexbox;
+    border-bottom: 100px;
+    border-top: 100px;
+}
+.booking-block button{
+    width: 250px;
+    height: 50px;
+    margin-left: 50px;
+    font-size: 18px;
+}
+.container {
+    position:center;
+    margin-top: -100px;
+}
+.hall {
+    margin: 0 auto; /* Центрирование таблицы по горизонтали */
+    margin-top: 50px;
+    margin-bottom: 30%;
+        }
+.window {
+    width: 350px;
+    text-align: center;
+    border: 1px solid black;
+    transform: translate(420px,120px)
+
+}
+
+.seats {
+    transform: translate(25px,0)
+    position: center;
+}
+.seat {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    background-color: #90EE90;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+}
+.seat.booked {
+    background-color: #FA8072;
+}
+.seat-row {
+        display: flex;
+        align-items: center;
+        transform: translate(820px,171px)
+    }
+    .occupied {
+        background-color: #FA8072;
+    }
+    .free {
+        background-color: #90EE90;
+    }
+    /* Стили для подписей */
+   .label {
+        position: flex;
+        top: 50%;
+        right: -60px; /* Располагаем надпись справа от ячейки */
+    }
+
+.movie-session{
+    margin-bottom: 200px;
+}
+.showtime-buttons {
+    width: 300px;
+    height: 300px;
+    color: #ffffff;
+}
+.session-list {
+    margin-top: 20px;
+    margin-left: -30px;
+}
+.session-list li {
+    margin-top: 10px;
+    list-style: none;
+}
+.btn-outline-dark {
+    background-color: white;
+    color: black;
+}
+#reserve-btn {
+    transform: translate(110px,-550px)
+}
+.booking-info{
+    transform: translate(-20px,240px)
+}
+
+footer {
+  border-top: 5px solid #DCDCDC;
+  background-color: #a6dced;
+  color: #0a0200;
+  text-align: center;
+  padding-top: 12px;
+  padding-left: 340px;
+}
+
+
+
+
+
+
+
